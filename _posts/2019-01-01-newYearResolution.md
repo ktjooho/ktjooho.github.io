@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Top 10 Python libraries of 2016"
-date:   2016-12-29 18:34:10 +0700
+title:  "웹플럭스와 스프링... "
+date:   2019-01-01 18:34:10 +0700
 categories: [python, django]
 ---
 
