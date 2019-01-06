@@ -13,49 +13,36 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
 
 ## 표준화의 필요성 및 OAuth2 의 등장.
  - SaaS 에 등장으로 여러 플랫폼사들은 자신의 서비스 이용을 위한 표준화된 방법이 필요하다는 결정을 하게 된다. 표준 기술체를 만듬으로써, SaaS 를 구현함에 발생하는 기술적인 이슈를 빠르게 해결하고, 플랫폼 서비스를 사용하는 클라이언트가 구현에 발생하는 비용을 줄일 수 있다. 
- SNS 플랫폼 등장 초기에 이 **인증 / 허가** 프로세스에 대한 표준화된 프로토콜이 대두되었고, 표준화된 프로토콜이 2007년에 OAuth 라는 이름으로 등장했다. 이후, 스마트폰 시장이 폭발적으로 성장하면서 OAuth 프로토콜의 성능적인 한계점이 드러났다. 
+ SNS 플랫폼 등장 초기에 이 **인증 / 허가** 프로세스에 대한 표준화된 프로토콜이 대두되었고, 표준화된 프로토콜이 2007년에 [OAuth 1.0 - RFC 5849](https://tools.ietf.org/html/rfc5849) 로 등장했다. 이후, 스마트폰 시장이 폭발적으로 성장하면서 OAuth 프로토콜의 성능적인 한계점이 드러났다. 
+ 
  > 가벼운 인증 절차, 테스트하기 쉬운 환경, 분산 환경.
- 모바일 시장의 폭발적인 수요를 맞추기 위해서는 위 3 가지를 지원할 수 있어야 했다. OAuth2 는 위 3가지 사항을 충족하는 형태로 설계됬고, 대다수의 IT 서비스 기업들 OAuth2를 공식 인증 방법으로 채택했다. 
+ 
+ 모바일 시장의 폭발적인 수요를 맞추기 위해서는 위 3 가지를 지원할 수 있어야 했다. OAuth2 는 위 3가지 사항을 충족하는 형태로 설계됬고, 2012년에 [OAuth 2.0 Authorization Framework](https://tools.ietf.org/html/rfc6749) 로 등장했다. 그리고 대다수의 IT 서비스 기업들 OAuth2를 공식 인증 방법으로 채택했다. 
 
 
 # Oauth2 핵심 용어(ROLE) 정리
+ [RFC 6749](https://tools.ietf.org/html/rfc6749) 문서에서 정의된 용어는 좀 더 범용적인 의미로 정의가 됬다. 해당 문서를 참조해서 용어를 정리하겠다. 
 - Resource Owner
-  - 서비스 제공자에 자원을 소유하고 있는 주체.
-  - 보통은 어플리케이션(클라이언트)을 이용하는 사용자(User)이다. 
-  - Grant Type 에 따라서, Machine 이 될 수도 있다. 
+  - 중요한 자원에 대한 권한을 부여할 수 있는 주체.
+  - 해당 주체가 사람일 경우, end-user 라고함.
+  - 여기서 의미하는 **중요한 자원**은 보통 Twitter, FaceBook 에서 end-user 가 지닌 개인 정보를 의미한다. 
 
-- Client
-  - 서비스 제공자의 서비스를 활용하는 주체. 보통 어플리케이션을 의미한다. 어플리케이션은 Native Application, Web Application
-  - 어플리케이션은 보안 상태에 따라, 두 가지 종류로 구분할 수 있다.
+- Resource Server
+  - 중요 자원(개인정보)을 소유하고, 이 자원에 대한 요청에 대해 응답을 할 수 있는 서버이다.
+  - 자원에 대한 요청은 반드시 **access token** 으로 요청한다. 
+  - access token 으로 자원을 요청하는 것. 즉, 아이디와 비밀번호에 대한 노출을 하지않는 것이 OAuth2 프로토콜의 핵심이다. 
+  - 보통 Resource Server 는 FaceBook, Twitter 와 같은 서비스 제공자를 의미한다. 
   
-- Resource Server
-  - 인증, 권한을 제공하는 서비스 제공자이다. FaceBook, Twitter, Google 이 해당 서비스 제공자라고 볼 수 있다. 
-
- - 그래서 어플리케이션들이 해당 서비스를 이용해서, 사용자들의 정보를 활용하거나 어플리케이션이ㅡ 
- - 사용자가 서비스 
-* 보안 이슈
-- ID / PW 
-* 
-- 새로운 형태의 서비스 제공 방식의 출현으로 인해 어플리케이션이 사용자에게 서비스를 제공해주는 방식이 많이 바꼈다.
-- SaaS가 어플리케이션 서비스 방식의 대세로 자리매김을 하면서, 서비스 제공자에 자신을 인증하는 방식의 표준이 필요하게 됬다.
-- 어플리케이션이 사용자와 서비스 제공자를 연결해주고, 서비스 제공자는 사용자에게 권한을 허락할 것인지 의사를 확인한다 
-- 사용자가 허락하면, 서비스 제공자는 어플리케이션에게 서비스 제공자의 서비스에 접근을 할 수 있는 접근 토큰(방문증)을 발급한다.
-- 어플리케이션은 그 뒤로 접근 토큰을 사용해서, 서비스 제공자의 서비스를 정해진 권한 범위내에서 사용할 수 있게 된다.  
-- SaaS(Software as a Service) 
-- 플랫폼화된 서비스의 등장으로 인해, 어플리케이션이 제공하는 서비스는 플랫폼과 연동하게 됨.
-- 예를 들면, 달리기 앱을 통해서 성취한 것을 플랫폼에 공유 할 수 있음. 
-- 혹은 플랫폼에 등록된 나의 계정 정보를 통해서 서비스를 제공. 
-- 
-- 기존 인증 방식의 문제점.
-  - 기존에는 API Key 방식으로 인증을 했음. 토큰 방식이 없었을 경우, 직접 ID / PW 를 노출해야됨. 안전하지 못함. 토큰을 들고 있게됨. 
-- 인증과 권한의 차이.
-- JWT 토큰을 사용한 Session 제거.   
-## 용어정리 
-- Resource Owner 
-- Resource Server
 - Client
-- Authorization Server 
+  - Resource Owner 를 대신해서 중요 자원을 요청하고, 이것에 대한 허가를 받는 Application(서버, 모바일앱, 데스크톱앱 .. 등등) 이다 
 
+- Authorization Server
+  - Client가 Resource Owner 에 대한 인증과 권한을 획득한 뒤에, access token 을 Client 에 발급해주는 서버이다. 
+  - Authorization Server 와 Resource Server 간의 통신에 대해서는 구현하는 측마다 상이하다.
+  - 가능한 형상
+    - Authorization Server 와 Resource Server 가 동일 서버
+    - 한 대의 Authorization Server 복수대의 Resource Server
+    
 # OAuth2 Grant Type 에 따른 플로우 - Use Case
 * Authorization Code
 * Client Credential
