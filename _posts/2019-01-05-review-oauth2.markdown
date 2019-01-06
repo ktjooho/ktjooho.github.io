@@ -44,11 +44,17 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
     - 한 대의 Authorization Server 복수대의 Resource Server
     
 # OAuth2 Grant Type 에 따른 플로우 - Use Case
+ OAuth2 구현은 Grant Type (권한 수여 방법) 에 따라서 달라진다. OAuth2 구현 코드들은 해당 Grant Type 을 기준으로 분기된다.  
 * Authorization Code
+  - 
 * Client Credential
+  - 
 * Password
+  - 
 * Implicit 
+  - 
 * Password
+  - 
 
 # 구현의 관점에서 보는 OAuth2 
 
