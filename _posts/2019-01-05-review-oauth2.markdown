@@ -34,7 +34,20 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
   - 보통 Resource Server 는 FaceBook, Twitter 와 같은 서비스 제공자를 의미한다. 
   
 - Client
-  - Resource Owner 를 대신해서 중요 자원을 요청하고, 이것에 대한 허가를 받는 Application(서버, 모바일앱, 데스크톱앱 .. 등등) 이다 
+  - Resource Owner 의 자원을 Resource Server 에게 요청하고 이 자원을 사용하는 주체. 어플리케이션(서버, 모바일앱, 데스크톱앱 .. 등등) 이다 
+  - 공식 문서에서는 안정성에 따라 두 가지 타입으로 구분한다.
+     - Confidential  : 자격성(client_secret value)을 안전하게 보관할 수 있음.
+     - Public :  자격성을 안전하게 보관하기 힘듬. 
+  - 타입에 따른 Client(어플리케이션) 종류
+     - 웹 어플리케이션(Confidential)
+       - Resource Owner 들은 HTML 유저인터페이스(웹브라우저)를 통해서 Client 에 접근하는 형태.
+     - 유저-에이전트 기반 어프리케이션(Public)
+       - 웹 서버로 부터 클라이언트 코드를 다운받아서, 어플리케이션 로직이 유저-에이전트(브라우저) 위에서 실행되는 형태이다. 
+       - 브라우저로 코드가 노출되다보니 소유, 프로토콜 데이터 및 자격 증명에 대해 쉽게 접근이 가능하다. 
+     - 네이티브 어플리케이션(Public or Confidential)
+       - Resource Owner에 의해 디바이스에 설치되고, 실행되는 형태의 어플리케이션이다. 예를 들면 스마트폰 앱을 들 수 있다. 
+       - 클라이언트 자격 증명이 어플리케이션에 포함될 수 있고, 추출해내기도 쉬울 수 있지만, 상황에 따라서 자격 증명 내용을 안전하게 보호받을 수 있음. ( 예 : 트위터 앱, 페이스북 앱)
+   
 
 - Authorization Server
   - Client가 Resource Owner 에 대한 인증과 권한을 획득한 뒤에, access token 을 Client 에 발급해주는 서버이다. 
@@ -43,6 +56,10 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
     - Authorization Server 와 Resource Server 가 동일 서버
     - 한 대의 Authorization Server 복수대의 Resource Server
 # OAuth2 의 대략적인 Flow
+ 1.  
+ 2. 
+ 3. 
+ 4. 
     
 # OAuth2 Grant Type 에 따른 구체적인 플로우 - Use Case
  OAuth2 구현은 Grant Type (권한 수여 방법) 에 따라서 달라진다. OAuth2 구현 코드들은 해당 Grant Type 을 기준으로 분기된다.  
@@ -56,6 +73,8 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
   - 
 * Password
   - 
+# OAuth2 Grant Type 을 정하는 의사결정방법.
+ 
 
 # 구현의 관점에서 보는 OAuth2 
 
