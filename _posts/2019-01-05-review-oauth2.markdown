@@ -56,7 +56,7 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
     - Authorization Server 와 Resource Server 가 동일 서버
     - 한 대의 Authorization Server 복수대의 Resource Server
 # OAuth2 의 대략적인 Flow
- 1.  
+ 1. Client 가 Resource Owner에게 권한을 요청함. 
  2. 
  3. 
  4. 
