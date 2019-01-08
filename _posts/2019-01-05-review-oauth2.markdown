@@ -25,7 +25,7 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
 - Resource Owner
   - 중요한 자원에 대한 권한을 부여할 수 있는 주체.
   - 해당 주체가 사람일 경우, end-user 라고함.
-  - 여기서 의미하는 **중요한 자원**은 보통 Twitter, FaceBook 에서 end-user 가 지닌 개인 정보를 의미한다. 
+  - 여기서 의미하는 **중요한 자원**은 보통 Twitter, FaceBook 와 같은 서비스 제공자가 지닌 end-user 의 개인 정보를 의미한다. 
 
 - Resource Server
   - 중요 자원(개인정보)을 소유하고, 이 자원에 대한 요청에 대해 응답을 할 수 있는 서버이다.
@@ -42,8 +42,9 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
   - 가능한 형상
     - Authorization Server 와 Resource Server 가 동일 서버
     - 한 대의 Authorization Server 복수대의 Resource Server
+# OAuth2 의 대략적인 Flow
     
-# OAuth2 Grant Type 에 따른 플로우 - Use Case
+# OAuth2 Grant Type 에 따른 구체적인 플로우 - Use Case
  OAuth2 구현은 Grant Type (권한 수여 방법) 에 따라서 달라진다. OAuth2 구현 코드들은 해당 Grant Type 을 기준으로 분기된다.  
 * Authorization Code
   - 
