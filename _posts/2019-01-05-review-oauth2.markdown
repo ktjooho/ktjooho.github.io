@@ -56,7 +56,7 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
 # OAuth2 의 대략적인 Flow
  1. Client 가 Resource Owner에게 권한을 요청함. 권한 요청은 직접 Resource Owner 를 통하거나 혹은 바람직하게는 Authorization Server 를 매개체로 비간접적으로 만들어진다.
     * 보통은 Authroization Server 에서 제공하는 권한 요청 페이지 서비스를 활용함. 
- 2. Client 는 Authorization Server 혹은 Resource Owner 로부터 Resource Owner 가 허가한 권한 수여(Authorization Grant)를 받는다. 권한 수여는 뒤에 나올 4가지의 OAuth2 의 Grant Type 방법 혹은 확장된 방법으로 정의된다. Authorization Grant Type 은 Client가 권한 요청하는 방법 그리고 Authorization Server 가 지원하는 방법에 의해 결정이 된다.   
+ 2. Client 는 Authorization Server 혹은 Resource Owner 로부터 Resource Owner 가 허가한 권한 수여(Authorization Grant)를 받는다. 권한 수여는 뒤에 나올 4가지의 OAuth2 의 Grant Type 방법 혹은 확장된 방법으로 표현된다. Authorization Grant Type 은 Client가 권한 요청하는 방법 그리고 Authorization Server 가 지원하는 방법에 의해 결정이 된다.   
  3. Client 는 Access Token 을 Authorization Server 에 인증(Authentication)과 허가받은 권한(Authorization Grant)과 함께 요청한다.    
  4. Authorization Server 는 Client 증명을 하고 권한에 대한 유효성을 확인해서, 유효하면 AccessToken 을 발급해준다. 
     
