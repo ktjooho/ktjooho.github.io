@@ -21,18 +21,18 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
 
 
 # Oauth2 핵심 용어(ROLE) 정리
-- Resource Owner
+- **Resource Owner**
   - 중요한 자원에 대한 권한을 부여할 수 있는 주체.
   - 해당 주체가 사람일 경우, end-user 라고함.
   - 여기서 의미하는 **중요한 자원**은 보통 Twitter, FaceBook 와 같은 서비스 제공자가 지닌 end-user 의 개인 정보를 의미한다. 
 
-- Resource Server
+- **Resource Server**
   - 중요 자원(개인정보)을 소유하고, 이 자원에 대한 요청에 대해 응답을 할 수 있는 서버이다.
   - 자원에 대한 요청은 반드시 **access token** 으로 요청한다. 
   - access token 으로 자원을 요청하는 것. 즉, 아이디와 비밀번호에 대한 노출을 하지않는 것이 OAuth2 프로토콜의 핵심이다. 
   - 보통 Resource Server 는 FaceBook, Twitter 와 같은 서비스 제공자를 의미한다. 
   
-- Client
+- **Client**
   - Resource Owner 의 자원을 Resource Server 에게 요청하고 이 자원을 사용하는 주체. 어플리케이션(서버, 모바일앱, 데스크톱앱 .. 등등) 이다 
   - 공식 문서에서는 안정성에 따라 두 가지 타입으로 구분한다.
      - Confidential  : 자격성(client_secret value)을 안전하게 보관할 수 있음.
@@ -47,7 +47,7 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
        - Resource Owner에 의해 디바이스에 설치되고, 실행되는 형태의 어플리케이션이다. 예를 들면 스마트폰 앱을 들 수 있다. 
        - 클라이언트 자격 증명이 어플리케이션에 포함될 수 있고, 추출해내기도 쉬울 수 있지만, 상황에 따라서 자격 증명 내용을 안전하게 보호받을 수 있음. ( 예 : 트위터 앱, 페이스북 앱)
    
-- Authorization Server
+- **Authorization Server**
   - Client가 Resource Owner 에 대한 인증과 권한을 획득한 뒤에, access token 을 Client 에 발급해주는 서버이다. 
   - Authorization Server 와 Resource Server 간의 통신에 대해서는 구현하는 측마다 상이하다.
   - 가능한 형상
