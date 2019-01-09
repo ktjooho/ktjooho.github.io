@@ -21,7 +21,6 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
 
 
 # Oauth2 핵심 용어(ROLE) 정리
- [RFC 6749](https://tools.ietf.org/html/rfc6749) 문서에서 정의된 용어는 좀 더 범용적인 의미로 정의가 됬다. 해당 문서를 참조해서 용어를 정리하겠다. 
 - Resource Owner
   - 중요한 자원에 대한 권한을 부여할 수 있는 주체.
   - 해당 주체가 사람일 경우, end-user 라고함.
@@ -48,7 +47,6 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
        - Resource Owner에 의해 디바이스에 설치되고, 실행되는 형태의 어플리케이션이다. 예를 들면 스마트폰 앱을 들 수 있다. 
        - 클라이언트 자격 증명이 어플리케이션에 포함될 수 있고, 추출해내기도 쉬울 수 있지만, 상황에 따라서 자격 증명 내용을 안전하게 보호받을 수 있음. ( 예 : 트위터 앱, 페이스북 앱)
    
-
 - Authorization Server
   - Client가 Resource Owner 에 대한 인증과 권한을 획득한 뒤에, access token 을 Client 에 발급해주는 서버이다. 
   - Authorization Server 와 Resource Server 간의 통신에 대해서는 구현하는 측마다 상이하다.
@@ -56,15 +54,17 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
     - Authorization Server 와 Resource Server 가 동일 서버
     - 한 대의 Authorization Server 복수대의 Resource Server
 # OAuth2 의 대략적인 Flow
- 1. Client 가 Resource Owner에게 권한을 요청함. 
- 2. 
- 3. 
- 4. 
+ 1. Client 가 Resource Owner에게 권한을 요청함. 권한 요청은 직접 Resource Owner 를 통하거나 혹은 바람직하게는 Authorization Server 를 매개체로 비간접적으로 만들어진다.
+    * 보통은 Authroization Server 에서 제공하는 권한 요청 페이지 서비스를 활용함. 
+ 2. Client 는 Authorization Server 혹은 Resource Owner 로부터 Resource Owner 가 허가한 권한 수여(Authorization Grant)를 받는다. 권한 수여는 뒤에 나올 4가지의 OAuth2 의 Grant Type 방법 혹은 확장된 방법으로 정의된다. Authorization Grant Type 은 Client가 권한 요청하는 방법 그리고 Authorization Server 가 지원하는 방법에 의해 결정이 된다.   
+ 3. Client 는 Access Token 을 Authorization Server 에 인증(Authentication)과 허가받은 권한(Authorization Grant)과 함께 요청한다.    
+ 4. Authorization Server 는 Client 증명을 하고 권한에 대한 유효성을 확인해서, 유효하면 AccessToken 을 발급해준다. 
     
 # OAuth2 Grant Type 에 따른 구체적인 플로우 - Use Case
  OAuth2 구현은 Grant Type (권한 수여 방법) 에 따라서 달라진다. OAuth2 구현 코드들은 해당 Grant Type 을 기준으로 분기된다.  
 * Authorization Code
-  - 
+   - 제 3자 인증 방식에서 쓰는 방법이다. 우리가 흔히보는 Facebook, Twitter, Naver, Kakao 인증을 하는 앱들이 이 방식을 쓴다.
+   - Client 가 Confidential 할 때 쓰는 방법이다.  
 * Client Credential
   - 
 * Password
@@ -74,7 +74,7 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
 * Password
   - 
 # OAuth2 Grant Type 을 정하는 의사결정방법.
- 
+# Refresh Token  
 
 # 구현의 관점에서 보는 OAuth2 
 
