@@ -8,7 +8,7 @@ categories: [oauth2]
 OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html) 에 맞게 변경하는데, 코드의 플로우와 사용하는 용어들이 상당히 낯설었다. 이참에 웹 분야의 인증에 어느 정도 개념을 잡고가야겠다는 생각을 했고, 이제껏 내가 공부한 OAuth2 의 개념에 대해서 첫 번째 포스트로 등록하기로 했다. 
 # 배경
 ## SaaS(Software as a Service) 
- - **Twitter, FaceBook, Google** 과 같은 거대 IT 기업들은 자신의 SNS 플랫폼에서 제공하는 서비스를 다른 소프트웨어에서도 사용할 수 있는 형태로 제공하는 상호협력 가능한 비즈니스 모델을 만들었다. 이 비즈니스 모델은 업계의 사실상 표준(**De Facto**)이 됬다. 우리가 사용하는 대다수의 모바일 앱들을 보면 구글, 페이스북, 혹은 네이버와 같은 서비스 플랫폼을 통해서 **인증(Authentication)**을 하고, **허가(Authorization)**받은 해당 플랫폼이 제공하는 서비스를 활용한다.
+ - **Twitter, FaceBook, Google** 과 같은 거대 IT 기업들은 자신의 SNS 플랫폼에서 제공하는 서비스를 다른 소프트웨어에서도 사용할 수 있는 형태로 제공하는 상호협력 가능한 비즈니스 모델을 만들었다. 이 비즈니스 모델은 업계의 사실상 표준(**De Facto**)이 됬다. 우리가 사용하는 대다수의 모바일 앱들을 보면 구글, 페이스북, 혹은 네이버와 같은 서비스 플랫폼을 통해서 **인증(Authentication)** 을 하고, **허가(Authorization)** 받은 해당 플랫폼이 제공하는 서비스를 활용한다.
 몇몇 예를 들자면, 달리기앱에서 오늘 달린 거리를 페이스북이나 트위터에 바로 올려서 친구들한테 나의 기록을 보여준다. 소개팅 앱에서 페이스북에서 설정한 개인정보(학교, 취미, 관심분야)를 이용해, 적절한 상대를 매칭해주거나 친구목록을 보고 매칭 상대를 제한하기도 한다. 
 
 ## 표준화의 필요성 및 OAuth2 의 등장.
@@ -65,6 +65,14 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
 * Authorization Code
    - 제 3자 인증 방식에서 쓰는 방법이다. 우리가 흔히보는 Facebook, Twitter, Naver, Kakao 인증을 하는 앱들이 이 방식을 쓴다.
    - Client 가 Confidential 할 때 쓰는 방법이다.  
+   - Flow
+     1. 사전에 Authorization Server 에 Client 를 등록한다. Client 의 id, scope, secret, redirection uri(Client가 정함) 을 발급한다. 
+     2. Client 가 Resource Owner 의 User-Agent 와 Authorization Endpoint(보통 인증 폼 화면 - 카카오, 트위터, 페이스북 인증창을 띄움) 를 연결함으로써, flow 를 시작한다.
+     3. User-Agent 를 통해 Authorizaiton Server 는 Resource Owner 를 인증하고, User-Agent로 하여금 Client 요청에 대한 권한 수여 혹은 거절 절차를 진행한다. 
+     4. 권한이 수여된다면, Authorization Server 는 1번에서 발급한 redirection uri 를 User-Agent 에게 내려주어서 Client 와 다시 남은 작업을 진행하도록 context를 넘긴다. redirection uri 에는 Authorization Code 와 Local State 가 포함되어있다. 
+     5. User-Agent 는 redirection uri 를 통해 Client 에게 Authorization Code 를 전달한다. Client 는 Authorization Code 를 받아서 Authroization Server 에게 redirection uri를 포함시켜, AccessToken 을 요청한다. 
+     6. Authorization Server 는 redirection uri 가 1번에서 만든 redirection uri 와의 동일성 검사와 Authroization Code 의 유효성을 검증해서, 합격하면 Access Token 과 경우에 따라서는 Refresh Token 을 발급해준다. 
+* Implicit
 * Client Credential
   - Confidential 한 Client 가 직접 
 * Password
@@ -72,33 +80,8 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
   - Flow
     1. Resource Owner 가 Client 에 id 와 password 를 제공한다.
     2. Client 가 Authorization Server 에 Resource Owner 의 자격증명 정보를 포함해서 AccessToken을 요청한다.
-    3. Authorization Server 는 Client 를 인증하고, Resource Owner 의 자격증명정보의 유효성을 검증한다. 조건이 충족되면 AccessToken 을 발급한다.
-  - Client 요청 예시
-    ```html   
-       POST /token HTTP/1.1
-       Host: server.example.com
-       Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
-       Content-Type: application/x-www-form-urlencoded
-       grant_type=password&username=johndoe&password=A3ddj3w
-    ```
-  - Authorization Server 응답 예시  
-    ```html   
-       HTTP/1.1 200 OK
-       Content-Type: application/json;charset=UTF-8
-       Cache-Control: no-store
-       Pragma: no-cache
-       {
-         "access_token":"2YotnFZFEjr1zCsicMWpAA",
-         "token_type":"example",
-         "expires_in":3600,
-         "refresh_token":"tGzv3JOkF0XG5Qx2TlKWIA",
-         "example_parameter":"example_value"
-       }
-    ```
-    
+    3. Authorization Server 는 Client 를 인증하고, Resource Owner 의 자격증명정보의 유효성을 검증한다. 조건이 충족되면 AccessToken 을 발급한다.    
 * Implicit 
-  - 
-* Password
   - 
 # OAuth2 Grant Type 을 정하는 의사결정방법.
 # Refresh Token  
