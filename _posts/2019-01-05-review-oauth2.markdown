@@ -61,18 +61,28 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
  4. Authorization Server 는 Client 증명을 하고 권한에 대한 유효성을 확인해서, 유효하면 AccessToken 을 발급해준다. 
     
 # OAuth2 Grant Type 에 따른 구체적인 플로우 - Use Case
- OAuth2 구현은 Grant Type (권한 수여 방법) 에 따라서 달라진다. OAuth2 구현 코드들은 해당 Grant Type 을 기준으로 분기된다.  
+ OAuth2 구현은 Grant Type (권한 수여 방법) 에 따라서 달라진다. 
 * Authorization Code
    - 제 3자 인증 방식에서 쓰는 방법이다. 우리가 흔히보는 Facebook, Twitter, Naver, Kakao 인증을 하는 앱들이 이 방식을 쓴다.
    - Client 가 Confidential 할 때 쓰는 방법이다.  
    - Flow
-     1. 사전에 Authorization Server 에 Client 를 등록한다. Client 의 id, scope, secret, redirection uri(Client가 정함) 을 발급한다. 
+     1. 사전에 Authorization Server 에 Client 를 등록한다. Client 의 id, scope, secret(검증 수단), redirection uri(Client가 정함) 을 발급한다. 
      2. Client 가 Resource Owner 의 User-Agent 와 Authorization Endpoint(보통 인증 폼 화면 - 카카오, 트위터, 페이스북 인증창을 띄움) 를 연결함으로써, flow 를 시작한다.
      3. User-Agent 를 통해 Authorizaiton Server 는 Resource Owner 를 인증하고, User-Agent로 하여금 Client 요청에 대한 권한 수여 혹은 거절 절차를 진행한다. 
      4. 권한이 수여된다면, Authorization Server 는 1번에서 발급한 redirection uri 를 User-Agent 에게 내려주어서 Client 와 다시 남은 작업을 진행하도록 context를 넘긴다. redirection uri 에는 Authorization Code 와 Local State 가 포함되어있다. 
      5. User-Agent 는 redirection uri 를 통해 Client 에게 Authorization Code 를 전달한다. Client 는 Authorization Code 를 받아서 Authroization Server 에게 redirection uri를 포함시켜, AccessToken 을 요청한다. 
      6. Authorization Server 는 redirection uri 가 1번에서 만든 redirection uri 와의 동일성 검사와 Authroization Code 의 유효성을 검증해서, 합격하면 Access Token 과 경우에 따라서는 Refresh Token 을 발급해준다. 
 * Implicit
+  - Authorization Code 와 비슷하지만 두 가지 차이점이 있다. 첫째는 User-Agent 기반 클라이언트(e.g. 싱글페이지웹 어플리케이션) 에 주로 사용되는 점이다. 이것은 Client secret 보관에 취약하다. 둘째는 Authorization Server 가 Authorization Code 대신에, 직접 AccessToken 을 User-Agent 에게 반환한다. 
+  - Flow
+    1. 사전에 Authorization Server 에 Client 를 등록한다. Client 의 id, scope, secret(검증 수단), redirection uri(Client가 정함) 을 발급한다. 
+    2. Client 가 Resource Owner 의 User-Agent 와 Authorization Endpoint(보통 인증 폼 화면 - 카카오, 트위터, 페이스북 인증창을 띄움) 를 연결함으로써, flow 를 시작한다.
+    3. User-Agent 를 통해 Authorizaiton Server 는 Resource Owner 를 인증하고, User-Agent로 하여금 Client 요청에 대한 권한 수여 혹은 거절 절차를 진행한다. 
+    4. 권한이 수여된다면, Authorization 서버는 발급한 redirection uri 에 access token을 encoding하고 uri fragment에 포함시켜, User-Agent 에 내려준다. 
+    5. User-Agent 는 redirection flow에 따라 웹호스트 Client 리소스에 요청을 만든다. 이때, uri fragment(인코딩된 Access Token)을 따로 떼어내서 내부적으로 보관하고 있다. 
+    6. 웹호스트 client 리소스는 웹페이지(HTML Document 와 내장된 스크립트)를 반환한다. 이 웹페이지는 full redirection URI 에 접근 가능하고, AccessToken 을 추출할 수 있다.
+    7. User-Agent 는 웹호스팅된 Client 가 제공한 스크립트를 내부적으로 실행해서, Access Token 을 추출한다. 
+    8. User-Agent 는 Access Token 을 Client 에 넘긴다. 
 * Client Credential
   - Confidential 한 Client 가 직접 
 * Password
