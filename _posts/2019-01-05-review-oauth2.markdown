@@ -84,15 +84,17 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
     7. User-Agent 는 웹호스팅된 Client 가 제공한 스크립트를 내부적으로 실행해서, Access Token 을 추출한다. 
     8. User-Agent 는 Access Token 을 Client 에 넘긴다. 
 * Client Credential
-  - Confidential 한 Client 가 직접 
+  - 가장 심플한 권한 수여 방식이다. 보통 machine to machine 인증에 적합하다.
+  - Client 가 자신의 자격 증명 정보를 가지고 Authorization Server Access Token 을 요청하고 받는다. 
+  - Flow
+    1. Client 가 Authorization Server 에 인증을 하고, Access Token 을 요청한다.
+    2. Authorization Server는 Client 인증을 하고, 유효하면 Access Token 을 발급한다. 
 * Password
   - Confidential 한 Client 가 resource Owner 의 자격증명 정보(Credential, e.g. "id", "password") 를 가지고 있어서, Resource Server 랑 직접 통신하는 방식이다. 보통 한 회사가 Client 와 Resource Server, Authorization Server 를 제공하는 경우에 이같은 형상을 가짐. 혹은 서버간 api 요청에서도 쓴다.
   - Flow
     1. Resource Owner 가 Client 에 id 와 password 를 제공한다.
     2. Client 가 Authorization Server 에 Resource Owner 의 자격증명 정보를 포함해서 AccessToken을 요청한다.
     3. Authorization Server 는 Client 를 인증하고, Resource Owner 의 자격증명정보의 유효성을 검증한다. 조건이 충족되면 AccessToken 을 발급한다.    
-* Implicit 
-  - 
 # OAuth2 Grant Type 을 정하는 의사결정방법.
 # Refresh Token  
 
