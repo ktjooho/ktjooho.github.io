@@ -113,6 +113,7 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
        - Thrid Party 일 경우.
          - *Implicit*  Grant Type 을 사용한다. 
      - 여기서 First Party, Third Party 는 Resource 를 제공하는 개발사에서 만든 App 인 경우, Third Party 를 아니면, First Party 를 의미한다.
+       - 예) Twitter, Facebook native app 은 Third Party App 이다. 
 # 결론
  - OAuth2는 Resource Owner 의 자격증명(Credential) 정보 없이 Client 가 Resource 를 Resource Server 로부터 받도록 했다.
  - 이를 가능케한 핵심은 Resource 제공 측에서 Access Token 을 발급해서, 그 Token 으로 자격성을 검증하는 것이다.
