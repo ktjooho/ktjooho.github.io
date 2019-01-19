@@ -4,6 +4,9 @@ title: About
 permalink: /about/
 ---
 
-I am freelance developer. Currently doing more in backend, focused in Python and Django.
+I am back-end programmer, focused in Java and Kotlin.
+I always want to being inspired sometimes it makes me guilty to take a rest. 
+I am interested in making non-side-effect(non duplicated) and readable code.
+This year my new year resolution is to write and share everything what I learned.  
 
-email: agus[at]python.web.id
+email: kxjooho@google.com
