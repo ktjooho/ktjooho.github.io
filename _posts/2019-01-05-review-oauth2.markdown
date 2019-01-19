@@ -100,21 +100,24 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
     - Machine 일 경우 (User Resource 를 사용하지 않음.) Grant Type은 *Client Credential* 이 된다. 
     - 그 외에는 아래 2번의 결정 방법에 따라 진행한다. 
   2. Client 의 타입과 각 Client 의 보안레벨로 결정한다. 
-    - Web App
-      - 보안이 안전하므로, *Authorization Code* Grant Type 을 사용한다.
-    - Native App
-      - First Party 일 경우.
-        - *Implicit* Grant Type 을 사용한다.
-      - Third Party 일 경우.
-        - *Authorization Code*  Grant Type 을 사용한다.
-    - User-Agent Based App
-      - First Party 일 경우.
-        - *Password* Grant Type 을 사용한다. 
-      - Thrid Party 일 경우.
-        - *Implicit*  Grant Type 을 사용한다. 
-# OAuth2 와 JWT 토큰
-## 토큰 관리 방법
-## 결론
+     - Web App
+       - 보안이 안전하므로, *Authorization Code* Grant Type 을 사용한다.
+     - Native App
+       - First Party 일 경우.
+         - *Implicit* Grant Type 을 사용한다.
+       - Third Party 일 경우.
+         - *Authorization Code*  Grant Type 을 사용한다.
+     - User-Agent Based App
+       - First Party 일 경우.
+         - *Password* Grant Type 을 사용한다. 
+       - Thrid Party 일 경우.
+         - *Implicit*  Grant Type 을 사용한다. 
+     - 여기서 First Party, Third Party 는 Resource 를 제공하는 개발사에서 만든 App 인 경우, Third Party 를 아니면, First Party 를 의미한다.
+# 결론
+ - OAuth2는 Resource Owner 의 자격증명(Credential) 정보 없이 Client 가 Resource 를 Resource Server 로부터 받도록 했다.
+ - 이를 가능케한 핵심은 Resource 제공 측에서 Access Token 을 발급해서, 그 Token 으로 자격성을 검증하는 것이다.
+ - Access Token 을 발급하는 과정은 Client 의 보안 정도에 따라서 달라진다. 
+ - 다음 포스트에서는 OAuth2 의 Access Token 에 대해 자세하게 다루겠다. 
 
 ## Reference
  - [A Guide To OAuth 2.0 Grants](https://alexbilbie.com/guide-to-oauth-2-grants/)
