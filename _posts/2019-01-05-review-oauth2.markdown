@@ -118,7 +118,7 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
  - OAuth2는 Resource Owner 의 자격증명(Credential) 정보 없이 Client 가 Resource 를 Resource Server 로부터 받도록 했다.
  - 이를 가능케한 핵심은 Resource 제공 측에서 Access Token 을 발급해서, 그 Token 으로 자격성을 검증하는 것이다.
  - Access Token 을 발급하는 과정은 Client 의 보안 정도에 따라서 달라진다. 
- - 다음 포스트에서는 OAuth2 의 Access Token 에 대해 자세하게 다루겠다. 
+ - 다음 포스트에서는 OAuth2 의 Access Token 에 대해서 좀 더 자세하게 다루겠다. 
 
 ## Reference
  - [A Guide To OAuth 2.0 Grants](https://alexbilbie.com/guide-to-oauth-2-grants/)
