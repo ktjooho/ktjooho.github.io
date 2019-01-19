@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "OAuth2 정리"
+title:  "OAuth2 기본 개념정리"
 date:   2019-01-05 00:18:23 +0700
 categories: [oauth2]
 ---
@@ -96,19 +96,27 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
     2. Client 가 Authorization Server 에 Resource Owner 의 자격증명 정보를 포함해서 AccessToken을 요청한다.
     3. Authorization Server 는 Client 를 인증하고, Resource Owner 의 자격증명정보의 유효성을 검증한다. 조건이 충족되면 AccessToken 을 발급한다.    
 # OAuth2 Grant Type 을 정하는 의사결정방법.
-# Refresh Token  
-
-# 구현의 관점에서 보는 OAuth2 
-
+  1. 먼저 Access Token Owner 가 누구인지 확인한다. 
+    - Machine 일 경우 (User Resource 를 사용하지 않음.) Grant Type은 *Client Credential* 이 된다. 
+    - 그 외에는 아래 2번의 결정 방법에 따라 진행한다. 
+  2. Client 의 타입과 각 Client 의 보안레벨로 결정한다. 
+    - Web App
+      - 보안이 안전하므로, *Authorization Code* Grant Type 을 사용한다.
+    - Native App
+      - First Party 일 경우.
+        - *Implicit* Grant Type 을 사용한다.
+      - Third Party 일 경우.
+        - *Authorization Code*  Grant Type 을 사용한다.
+    - User-Agent Based App
+      - First Party 일 경우.
+        - *Password* Grant Type 을 사용한다. 
+      - Thrid Party 일 경우.
+        - *Implicit*  Grant Type 을 사용한다. 
 # OAuth2 와 JWT 토큰
 ## 토큰 관리 방법
-
-# 토큰 저장 방법 
-
 ## 결론
 
 ## Reference
- - [OAuth-Wikipedia]()
+ - [A Guide To OAuth 2.0 Grants](https://alexbilbie.com/guide-to-oauth-2-grants/)
  - [OAuth2-IETF(RFC6749)](https://tools.ietf.org/html/rfc6749)
- - 
 
