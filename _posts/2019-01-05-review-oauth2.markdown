@@ -5,8 +5,8 @@ date:   2019-01-05 00:18:23 +0700
 categories: [oauth2]
 ---
 기존 프로젝트에서 사용하는 Spring 버전을 4 에서 5로 업데이트를 하면서, Spring Security 관련 코드 수정에서 어려움을 겪었다. 
-OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html) 에 맞게 변경하는데, 코드의 플로우와 사용하는 용어들이 상당히 낯설었다. 이참에 웹 분야의 인증에 어느 정도 개념을 잡고가야겠다는 생각을 했고, 이제껏 내가 공부한 OAuth2 의 개념에 대해서 첫 번째 포스트로 등록하기로 했다. 
-
+OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html) 에 맞게 변경하는데, 코드의 플로우와 사용하는 용어들이 상당히 낯설었다. 이참에 웹 분야의 인증에 어느 정도 개념을 잡고가야겠다는 생각을 했고, 이제껏 내가 공부한 OAuth2 의 개념에 대해서 첫 번째 포스트로 등록하기로 했다. (#some-markdown-heading)
+[create an anchor](#anchors-in-markdown)
 # 배경
 
 ## SaaS(Software as a Service) 
@@ -94,7 +94,8 @@ OAuth2 관련된 코드를 [WebFlux(Reactive Web)](https://docs.spring.io/spring
   - Flow
     1. Resource Owner 가 Client 에 id 와 password 를 제공한다.
     2. Client 가 Authorization Server 에 Resource Owner 의 자격증명 정보를 포함해서 AccessToken을 요청한다.
-    3. Authorization Server 는 Client 를 인증하고, Resource Owner 의 자격증명정보의 유효성을 검증한다. 조건이 충족되면 AccessToken 을 발급한다.    
+    3. Authorization Server 는 Client 를 인증하고, Resource Owner 의 자격증명정보의 유효성을 검증한다. 조건이 충족되면 AccessToken 을 발급한다. 
+    
 # OAuth2 Grant Type 을 정하는 의사결정방법.
   1. 먼저 Access Token Owner 가 누구인지 확인한다. 
     - Machine 일 경우 (User Resource 를 사용하지 않음.) Grant Type은 *Client Credential* 이 된다. 
